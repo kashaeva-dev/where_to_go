@@ -13,3 +13,15 @@ class Place(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Image(models.Model):
+    place = models.ForeignKey(Place, on_delete=models.PROTECT, related_name='images', verbose_name='Место')
+    image = models.ImageField(upload_to='place_images', verbose_name='Изображение')
+
+    class Meta:
+        verbose_name = 'Изображение'
+        verbose_name_plural = 'Изображения'
+
+    def __str__(self):
+        return f"{self.pk} {self.place.title}"
