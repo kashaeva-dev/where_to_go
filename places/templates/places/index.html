@@ -38,37 +38,8 @@
       width: 100px;
     }
   </style>
-  <script id="places-geojson" type="application/json">
-    {
-      "type": "FeatureCollection",
-      "features": [
-        {
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [37.62, 55.793676]
-          },
-          "properties": {
-            "title": "«Легенды Москвы",
-            "placeId": "moscow_legends",
-            "detailsUrl": "{% static 'places/places/moscow_legends.json' %}"
-          }
-        },
-        {
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [37.64, 55.753676]
-          },
-          "properties": {
-            "title": "Крыши24.рф",
-            "placeId": "roofs24",
-            "detailsUrl": "{% static 'places/places/roofs24.json' %}"
-          }
-        }
-      ]
-    }
-  </script>
+
+  {{ data|json_script:"places-geojson" }}
 
   <script id="app-template" type="text/template">
     <div v-bind:class="{'sidebar-content': 1, 'bg-white': selectedPlace, 'bg-secondary': !selectedPlace}">
@@ -221,7 +192,7 @@
           marker.on('click', function(event){
             log.debug('Feature selected', geoJsonPoint);
             sidebar.show();
-            loadPlaceInfo(geoJsonPoint.properties.placeId, geoJsonPoint.properties.detailsUrl);
+            loadPlaceInfo(geoJsonPoint.properties.placeId, geoJsonPoint.properties.details);
           });
           return marker;
         }
@@ -279,18 +250,12 @@
       sidebarApp.loadingPlaceId = null;
     })
 
-    async function loadPlaceInfo(placeId, detailsUrl){
+    async function loadPlaceInfo(placeId, details){
       sidebarApp.selectedPlace = null;
       sidebarApp.loadingPlaceId = placeId;
 
       try {
-        let response = await fetch(detailsUrl);
-
-        if (!response.ok){
-          return;
-        }
-
-        let data = await response.json();
+        let data = details;
 
         if (sidebarApp.loadingPlaceId != placeId){
           // Place loading was cancelled by user
