@@ -20,10 +20,12 @@ class Place(models.Model):
 class Image(models.Model):
     place = models.ForeignKey(Place, on_delete=models.PROTECT, related_name='images', verbose_name='Место')
     image = models.ImageField(upload_to='place_images', verbose_name='Изображение')
+    image_order = models.PositiveIntegerField(default=0)
 
     class Meta:
         verbose_name = 'Изображение'
         verbose_name_plural = 'Изображения'
+        ordering=['image_order']
 
     def __str__(self):
         return f"{self.pk} {self.place.title}"
