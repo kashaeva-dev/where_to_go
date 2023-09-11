@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+from environs import Env
+
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,16 +24,30 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#2l)i((y01)os^ij(-ec%5@6t2#d*-b%(qlw81(0y*t@jvlt2l'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG', False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', '*')
 
+CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE', True)
+
+SESSION_COOKIE_SECURE = env('SESSION_COOKIE_SECURE', True)
+
+# почему-то, если здесь указать env('SECURE_SSL_REDIRECT', True), а в .env файле SECURE_SSL_REDIRECT=False,
+# то все равно запускается https
+SECURE_SSL_REDIRECT = False
+
+SECURE_HSTS_SECONDS = env('SECURE_HSTS_SECONDS', 31536000)
+
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env('SECURE_HSTS_INCLUDE_SUBDOMAINS', True)
+
+SECURE_HSTS_PRELOAD = env('SECURE_HSTS_PRELOAD', True)
+
+SECURE_CONTENT_TYPE_NOSNIFF = env('SESSION_COOKIE_SECURE', True)
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
