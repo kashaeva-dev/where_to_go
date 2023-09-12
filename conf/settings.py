@@ -27,25 +27,23 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG', False)
+DEBUG = env('DEBUG', False).lower() == 'true'
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', '*')
 
-CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE', True)
+CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE', True).lower() == 'true'
 
-SESSION_COOKIE_SECURE = env('SESSION_COOKIE_SECURE', True)
+SESSION_COOKIE_SECURE = env('SESSION_COOKIE_SECURE', True).lower() == 'true'
 
-# почему-то, если здесь указать env('SECURE_SSL_REDIRECT', True), а в .env файле SECURE_SSL_REDIRECT=False,
-# то все равно запускается https
-SECURE_SSL_REDIRECT = False
+SECURE_SSL_REDIRECT = env('SECURE_SSL_REDIRECT', True).lower() == 'true'
 
 SECURE_HSTS_SECONDS = env('SECURE_HSTS_SECONDS', 31536000)
 
-SECURE_HSTS_INCLUDE_SUBDOMAINS = env('SECURE_HSTS_INCLUDE_SUBDOMAINS', True)
+SECURE_HSTS_INCLUDE_SUBDOMAINS = env('SECURE_HSTS_INCLUDE_SUBDOMAINS', True).lower() == 'true'
 
-SECURE_HSTS_PRELOAD = env('SECURE_HSTS_PRELOAD', True)
+SECURE_HSTS_PRELOAD = env('SECURE_HSTS_PRELOAD', True).lower() == 'true'
 
-SECURE_CONTENT_TYPE_NOSNIFF = env('SESSION_COOKIE_SECURE', True)
+SECURE_CONTENT_TYPE_NOSNIFF = env('SESSION_COOKIE_SECURE', True).lower() == 'true'
 
 # Application definition
 INSTALLED_APPS = [
