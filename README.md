@@ -12,7 +12,7 @@
 
 1. Склонируйте репозиторий:
 ```bash
-   git clone https://github.com/ваш-пользователь/ваш-репозиторий.git
+git clone https://github.com/ваш-пользователь/ваш-репозиторий.git
 ```
 2. Создайте виртуальное окружение и активируйте его:
 ```bash
@@ -85,3 +85,10 @@ python manage.py createsuperuser
    ![img_5.png](readme_images/img_5.png)
    3. Добавить новые локации или удалить старые
    ![img6.png](readme_images/img_6.png)
+
+
+## Цели проекта
+
+Код написан в учебных целях — это урок в курсе по Python и веб-разработке на сайте [Devman](https://dvmn.org).
+
+Тестовые данные взяты с сайта [KudaGo](https://kudago.com).
