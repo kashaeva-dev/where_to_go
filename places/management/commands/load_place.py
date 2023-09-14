@@ -1,10 +1,11 @@
-import itertools
+import ast
+import os
 
 import requests
+from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
-from django.utils.text import slugify
 
-from places.models import Place
+from places.models import Place, Image
 
 
 class Command(BaseCommand):
@@ -22,28 +23,22 @@ class Command(BaseCommand):
         response = requests.get(url)
         response.raise_for_status()
 
-        place = response.json()
+        place = ast.literal_eval(''.join(response.json()['payload']['blob']['rawLines']))
 
-        def generate_slug(text):
-            slug_candidate = slug_original = slugify(text, allow_unicode=True)
-            for i in itertools.count(1):
-                if not Place.objects.filter(slug=slug_candidate).exists():
-                    break
-                slug_candidate = '{}-{}'.format(slug_original, i)
+        new_place, _ = Place.objects.get_or_create(
+            title = place['title'],
+            defaults={
+                'description_short': place['description_short'],
+                'description_long': place['description_long'],
+                'lat': place['coordinates']['lat'],
+                'lon': place['coordinates']['lng'],
+            }
+        )
 
-            return slug_candidate
-
-        try:
-            new_place, _ = Place.objects.get_or_create(
-                title = place['title'],
-                defaults={
-                    'placeID': generate_slug(place['title']),
-                    'description_short': place['description_short'],
-                    'description_long': place['description_long'],
-                    'lat': place['coordinates']['lat'],
-                    'lon': place['ccoordinates']['lng'],
-                }
-            )
-        except:
-            pass
+        image_urls = place['imgs']
+        for image_url in image_urls:
+            response = requests.get(image_url)
+            response.raise_for_status()
+            image_content = ContentFile(response.content, name=os.path.split(image_url)[1])
+            Image.objects.create(place=new_place, image=image_content)
 
