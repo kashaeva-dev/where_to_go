@@ -28,7 +28,7 @@ def main(request):
                 "coordinates": [place.lon, place.lat],
             },
             "properties": {
-                "title":place.title_short,
+                "title": place.title,
                 "placeId": place.placeID,
                 "details": place_details,
             }

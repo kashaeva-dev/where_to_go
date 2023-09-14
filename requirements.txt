@@ -1,5 +1,6 @@
 Django==4.2.5
-Pillow-10.0.0
-django_admin_sortable2-2.1.9
-django_tinymce-3.6.1
-environs-9.5.0
+Pillow==10.0.0
+django_admin_sortable2==2.1.9
+django_tinymce==3.6.1
+environs==9.5.0
+requests==2.31.0

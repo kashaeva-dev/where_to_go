@@ -29,19 +29,19 @@ DEBUG = env('DEBUG', False).lower() == 'true'
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', '*')
 
-CSRF_COOKIE_SECURE = env('CSRF_COOKIE_SECURE', True).lower() == 'true'
+CSRF_COOKIE_SECURE = str(env('CSRF_COOKIE_SECURE', True)).lower() == 'true'
 
-SESSION_COOKIE_SECURE = env('SESSION_COOKIE_SECURE', True).lower() == 'true'
+SESSION_COOKIE_SECURE = str(env('SESSION_COOKIE_SECURE', True)).lower() == 'true'
 
-SECURE_SSL_REDIRECT = env('SECURE_SSL_REDIRECT', True).lower() == 'true'
+SECURE_SSL_REDIRECT = str(env('SECURE_SSL_REDIRECT', True)).lower() == 'true'
 
 SECURE_HSTS_SECONDS = env('SECURE_HSTS_SECONDS', 31536000)
 
-SECURE_HSTS_INCLUDE_SUBDOMAINS = env('SECURE_HSTS_INCLUDE_SUBDOMAINS', True).lower() == 'true'
+SECURE_HSTS_INCLUDE_SUBDOMAINS = str(env('SECURE_HSTS_INCLUDE_SUBDOMAINS', True)).lower() == 'true'
 
-SECURE_HSTS_PRELOAD = env('SECURE_HSTS_PRELOAD', True).lower() == 'true'
+SECURE_HSTS_PRELOAD = str(env('SECURE_HSTS_PRELOAD', True)).lower() == 'true'
 
-SECURE_CONTENT_TYPE_NOSNIFF = env('SESSION_COOKIE_SECURE', True).lower() == 'true'
+SECURE_CONTENT_TYPE_NOSNIFF = str(env('SESSION_COOKIE_SECURE', True)).lower() == 'true'
 
 # Application definition
 INSTALLED_APPS = [
