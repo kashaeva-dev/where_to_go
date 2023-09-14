@@ -29,9 +29,10 @@ python manage.py migrate
 ```
 5. Заполните базу данных тестовыми данными:
 ```
-python manage.py loaddata fixtures/place_fixture.json
-python manage.py loaddata fixtures/image_fixture.json
+python manage.py load_place <http://адрес/файла.json>
 ```
+Данные для локаций можно взять по [ссылке](https://github.com/devmanorg/where-to-go-places). 
+Следуйте инструкции для получения адресов для последующего скачивания.
 6. Создайте файл .env и заполните в нем следующие переменные:
 ```
 SECRET_KEY=<YOUR SECRET KEY>
