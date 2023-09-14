@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = env('SECRET_KEY')
 
-DEBUG = env('DEBUG', False).lower() == 'true'
+DEBUG = str(env('DEBUG', False)).lower() == 'true'
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', '*')
 
@@ -132,10 +132,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_URL = env('STATIC_URL', 'static/')
+STATIC_ROOT = env('STATIC_ROOT', os.path.join(BASE_DIR, "static"))
 
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = env('MEDIA_ROOT', os.path.join(BASE_DIR,'media'))
 MEDIA_URL = '/media/'
 
 # Default primary key field type
