@@ -1,8 +1,8 @@
 from django.http import Http404, JsonResponse
+from django.shortcuts import render
 
-from conf.wsgi import *
-from django.shortcuts import render, get_object_or_404
-from places.models import Place, Image
+from places.models import Place
+
 
 def main(request):
     features = []
@@ -31,7 +31,7 @@ def main(request):
                 "title": place.title,
                 "placeId": place.placeID,
                 "details": place_details,
-            }
+            },
         }
         features.append(place_geodata)
 

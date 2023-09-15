@@ -20,7 +20,11 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('image', models.ImageField(upload_to='place_images', verbose_name='Изображение')),
-                ('place', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='images', to='places.place', verbose_name='Место')),
+                ('place', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT,
+                                            related_name='images',
+                                            to='places.place',
+                                            verbose_name='Место'),
+                 ),
             ],
             options={
                 'verbose_name': 'Изображение',

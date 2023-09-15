@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.text import slugify
 from tinymce.models import HTMLField
 
+
 class Place(models.Model):
     title = models.CharField(max_length=200,
                              verbose_name='Название места',
@@ -23,7 +24,6 @@ class Place(models.Model):
         return self.title
 
     def _generate_slug(self):
-        max_length = self._meta.get_field('placeID').max_length
         value = self.title
         slug_candidate = slug_original = slugify(value, allow_unicode=True)
         for i in itertools.count(1):
@@ -48,7 +48,7 @@ class Image(models.Model):
     class Meta:
         verbose_name = 'Изображение'
         verbose_name_plural = 'Изображения'
-        ordering=['image_order']
+        ordering = ['image_order']
 
     def __str__(self):
         return f"{self.pk} {self.place.title}"

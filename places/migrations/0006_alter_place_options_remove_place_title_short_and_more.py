@@ -21,6 +21,10 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='place',
             name='title',
-            field=models.CharField(help_text='Это название будет отображаться в виде заголовка в тексте)', max_length=200, unique=True, verbose_name='Название места'),
+            field=models.CharField(help_text='Это название будет отображаться в виде заголовка в тексте)',
+                                   max_length=200,
+                                   unique=True,
+                                   verbose_name='Название места',
+                                   ),
         ),
     ]

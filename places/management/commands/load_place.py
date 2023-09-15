@@ -16,7 +16,6 @@ class Command(BaseCommand):
             help='Ссылка на информацию о локации',
         )
 
-
     def handle(self, *args, **options):
         url = options['place_url']
 
@@ -26,13 +25,13 @@ class Command(BaseCommand):
         place = ast.literal_eval(''.join(response.json()['payload']['blob']['rawLines']))
 
         new_place, _ = Place.objects.get_or_create(
-            title = place['title'],
+            title=place['title'],
             defaults={
                 'description_short': place['description_short'],
                 'description_long': place['description_long'],
                 'lat': place['coordinates']['lat'],
                 'lon': place['coordinates']['lng'],
-            }
+            },
         )
 
         image_urls = place['imgs']
@@ -41,4 +40,3 @@ class Command(BaseCommand):
             response.raise_for_status()
             image_content = ContentFile(response.content, name=os.path.split(image_url)[1])
             Image.objects.create(place=new_place, image=image_content)
-
