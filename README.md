@@ -19,6 +19,8 @@ git clone https://github.com/ваш-пользователь/ваш-репози
 python -m venv env
 source env/bin/activate
 ```
+Работоспособность проекта протестирована на python 3.10 и python 3.11
+
 3. Установите зависимости:
 ```bash
 pip install -r requirements.txt
@@ -38,14 +40,16 @@ python manage.py load_place <http://адрес/файла.json>
 SECRET_KEY=<YOUR SECRET KEY>
 ALLOWED_HOSTS=127.0.0.1
 DEBUG=True
-CSRF_COOKIE_SECURE=False
-SESSION_COOKIE_SECURE=False
-SECURE_SSL_REDIRECT=False
-SECURE_HSTS_SECONDS=''
-SECURE_HSTS_INCLUDE_SUBDOMAINS=False
-SECURE_HSTS_PRELOAD=False
-SECURE_CONTENT_TYPE_NOSNIFF=False
 ```
+**SECRET_KEY** - Секретный ключ для конкретной установки Django. Он используется для обеспечения cryptographic signing,
+и должен быть установлен на уникальное, непредсказуемое значение. Сгенерировать SECRET_KEY можно по
+[ссылке](https://djecrety.ir/).
+
+**ALLOWED_HOSTS** - Список строк, представляющих имена хостов/доменов, которые может обслуживать данный Django-сайт. Подробнее можно почитать по
+[ссылке](https://django.fun/ru/docs/django/4.0/ref/settings/#allowed-hosts).
+
+**DEBUG** - Булево значение, которое включает/выключает режим отладки. 
+Подробнее по [ссылке](https://django.fun/ru/docs/django/4.0/ref/settings/#debug).
 
 ## Использование
 
@@ -84,7 +88,7 @@ python manage.py createsuperuser
    ![img_3.png](readme_images/img_3.png)
    - Выбрать самые яркие картинки и переместить их в начало списка, чтобы изменить порядок их отображения на сайте.
    ![img_5.png](readme_images/img_5.png)
-   3. Добавить новые локации или удалить старые
+3. Добавить новые локации или удалить старые
    ![img6.png](readme_images/img_6.png)
 
 
