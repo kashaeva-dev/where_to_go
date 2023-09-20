@@ -11,8 +11,8 @@ class Place(models.Model):
                              unique=True,
                              )
     placeID = models.SlugField(max_length=100, verbose_name='ID места', default='', blank=True)
-    description_short = models.TextField(verbose_name='Краткое описание', blank=True)
-    description_long = HTMLField(verbose_name='Полное описание', blank=True)
+    short_description = models.TextField(verbose_name='Краткое описание', blank=True)
+    long_description = HTMLField(verbose_name='Полное описание', blank=True)
     lat = models.FloatField(verbose_name='Широта')
     lon = models.FloatField(verbose_name='Долгота')
 
@@ -43,12 +43,12 @@ class Place(models.Model):
 class Image(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name='images', verbose_name='Место')
     image = models.ImageField(upload_to='place_images', verbose_name='Изображение')
-    image_order = models.PositiveIntegerField(default=0)
+    order = models.PositiveIntegerField(default=0, db_index=True, null=True, blank=True)
 
     class Meta:
         verbose_name = 'Изображение'
         verbose_name_plural = 'Изображения'
-        ordering = ['image_order']
+        ordering = ['order']
 
     def __str__(self):
-        return f"{self.pk} {self.place.title}"
+        return f'{self.pk} {self.place.title}'

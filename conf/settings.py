@@ -28,7 +28,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = env.bool('DEBUG', False)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', '*')
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 CSRF_COOKIE_SECURE = env.bool('CSRF_COOKIE_SECURE', False)
 
