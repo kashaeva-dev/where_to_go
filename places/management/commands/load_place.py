@@ -1,5 +1,6 @@
 import ast
 import os
+from pprint import pprint
 
 import requests
 from django.core.files.base import ContentFile
@@ -22,13 +23,14 @@ class Command(BaseCommand):
         response = requests.get(url)
         response.raise_for_status()
 
-        place = ast.literal_eval(''.join(response.json()['payload']['blob']['rawLines']))
+        pprint(response.json())
+        place = response.json()
 
         new_place, _ = Place.objects.get_or_create(
             title=place['title'],
             defaults={
-                'short_description': place['short_description'],
-                'long_description': place['long_description'],
+                'short_description': place['description_short'],
+                'long_description': place['description_long'],
                 'lat': place['coordinates']['lat'],
                 'lon': place['coordinates']['lng'],
             },

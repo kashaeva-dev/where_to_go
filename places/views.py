@@ -1,5 +1,6 @@
-from django.http import Http404, JsonResponse
-from django.shortcuts import render
+from django.http import JsonResponse
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 
 from places.models import Place
 
@@ -8,19 +9,8 @@ def main(request):
     features = []
     places = Place.objects.prefetch_related('images').all()
     for place in places:
-        imgs = []
-        for image in place.images.all():
-            imgs.append(image.image.url)
-        place_details = {
-            'title': place.title,
-            'short_description': place.short_description,
-            'long_description': place.long_description,
-            'coordinates': {
-                'lng': place.lon,
-                'lat': place.lat,
-            },
-            'imgs': imgs,
-        }
+        base_url = request.build_absolute_uri()
+        path_url = reverse("places", args=(place.pk,))
         place_geodata = {
             'type': 'Feature',
             'geometry': {
@@ -30,7 +20,7 @@ def main(request):
             'properties': {
                 'title': place.title,
                 'placeId': place.placeID,
-                'details': place_details,
+                'detailsUrl': f'{base_url}{path_url}',
             },
         }
         features.append(place_geodata)
@@ -40,14 +30,13 @@ def main(request):
       'features': features,
     }
 
-    return render(request, 'places/index.html', context={'data': places_geojson})
+    return render(request, 'places/index.html', context={'geo': places_geojson})
 
 
 def place_details(request, place_id):
-    try:
-        place = Place.objects.prefetch_related('images').get(pk=place_id)
-    except Place.DoesNotExist:
-        raise Http404('No places matches the given query.')
+
+    place = get_object_or_404(Place, id=place_id)
+
     imgs = []
     for image in place.images.all():
         imgs.append(image.image.url)
@@ -59,6 +48,6 @@ def place_details(request, place_id):
             'lng': place.lon,
             'lat': place.lat,
         },
-        'imgs': imgs,
+        'imgs': [image.image.url for image in place.images.all()],
     }
     return JsonResponse(place_details, safe=False, json_dumps_params={'ensure_ascii': False, 'indent': 4})
