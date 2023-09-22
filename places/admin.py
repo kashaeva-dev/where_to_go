@@ -21,9 +21,11 @@ class PlaceAdmin(SortableAdminBase, admin.ModelAdmin):
     search_fields = ('title', )
     exclude = ('placeID', )
 
+
 @admin.register(Image)
 class ImageAdmin(admin.ModelAdmin):
     list_display = ('place', 'image', 'order', 'image_preview')
+    raw_id_fields = ('place', )
 
     def image_preview(self, obj):
         return format_html('<img src="{}" style="max-height: 200px; max-width: 200px;"/>', mark_safe(obj.image.url))

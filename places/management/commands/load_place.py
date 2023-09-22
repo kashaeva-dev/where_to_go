@@ -1,6 +1,4 @@
-import ast
 import os
-from pprint import pprint
 
 import requests
 from django.core.files.base import ContentFile
@@ -19,13 +17,9 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         url = options['place_url']
-
         response = requests.get(url)
         response.raise_for_status()
-
-        pprint(response.json())
         place = response.json()
-
         new_place, _ = Place.objects.get_or_create(
             title=place['title'],
             defaults={

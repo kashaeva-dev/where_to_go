@@ -38,15 +38,11 @@ python manage.py load_place <http://адрес/файла.json>
 6. Создайте файл .env и заполните в нем следующие переменные:
 ```
 SECRET_KEY=<YOUR SECRET KEY>
-ALLOWED_HOSTS=127.0.0.1
 DEBUG=True
 ```
 **SECRET_KEY** - Секретный ключ для конкретной установки Django. Он используется для обеспечения cryptographic signing,
 и должен быть установлен на уникальное, непредсказуемое значение. Сгенерировать SECRET_KEY можно по
 [ссылке](https://djecrety.ir/).
-
-**ALLOWED_HOSTS** - Список строк, представляющих имена хостов/доменов, которые может обслуживать данный Django-сайт. Подробнее можно почитать по
-[ссылке](https://django.fun/ru/docs/django/4.0/ref/settings/#allowed-hosts).
 
 **DEBUG** - Булево значение, которое включает/выключает режим отладки. 
 Подробнее по [ссылке](https://django.fun/ru/docs/django/4.0/ref/settings/#debug).

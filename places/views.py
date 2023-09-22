@@ -34,12 +34,7 @@ def main(request):
 
 
 def place_details(request, place_id):
-
-    place = get_object_or_404(Place, id=place_id)
-
-    imgs = []
-    for image in place.images.all():
-        imgs.append(image.image.url)
+    place = get_object_or_404(Place.objects.prefetch_related('images'), id=place_id)
     place_details = {
         'title': place.title,
         'short_description': place.short_description,
@@ -50,4 +45,5 @@ def place_details(request, place_id):
         },
         'imgs': [image.image.url for image in place.images.all()],
     }
+
     return JsonResponse(place_details, safe=False, json_dumps_params={'ensure_ascii': False, 'indent': 4})
